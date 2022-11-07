@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
-
+import LineChart from './components/LineChart';
+import './App.css'
+import { useEffect,useState } from 'react';
+import {api} from './api-config'
 function App() {
-  return (
+
+const [annunalchartData, setannunalChartData] = useState(null)
+const[cummulativeChartData,setCummulativeData]=useState(null)
+
+ const getChartData= ()=>{
+    api.get('/annual').then((res)=>setannunalChartData(res.data)).catch((err)=>console.log(err))
+    api.get('/cummulative').then((res)=>setCummulativeData(res.data)).catch((err)=>console.log(err))
+ }
+
+  useEffect(()=>{
+  getChartData()
+  },[])
+
+  if(annunalchartData && cummulativeChartData){
+    return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='chart'>
+          <LineChart chartData={annunalchartData} chartName='Annual total of all the PhDs published by Dutch Universities ' />
+          <LineChart chartData={cummulativeChartData} chartName='Cummulative total of all the PhDs published by Dutch Universities ' />
+        </div>
     </div>
-  );
+    )
+  }
+  else{
+    return (
+      <h1>loading</h1>
+      );
+  }
+  
 }
 
 export default App;
