@@ -1,13 +1,14 @@
 import pandas as pd
-import os
 
-files=["./annual.csv","./cummulative.csv","./university.csv"]
+files=["./csv/annual.csv","./csv/cummulative.csv","./csv/university.csv"]
+
+
 
 
 def extract(file):
     df=pd.read_csv(file)
-    outputFile=file.split('.')[1][1:]
-    df.to_json(f"{outputFile}.json",orient='records')
+    outputFile=file.split('/')[2].split('.')[0]
+    df.to_json(f"./json/{outputFile}.json")
 
 for file in files:
     extract(file)
