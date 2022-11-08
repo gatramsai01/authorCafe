@@ -9,7 +9,7 @@ app.add_middleware(
     allow_origins=['*']
 )
 
-mongoUrl='mongodb://root:example@localhost:27017/'
+mongoUrl='mongodb+srv://monster007:14WqKdKQohujFokk@authorcafe.rqdsabg.mongodb.net/?retryWrites=true&w=majority'
 
 client=MongoClient(mongoUrl)
 
