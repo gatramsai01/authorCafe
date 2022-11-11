@@ -11,8 +11,9 @@ app.add_middleware(
 
 mongoUrl='mongodb+srv://monster007:14WqKdKQohujFokk@authorcafe.rqdsabg.mongodb.net/?retryWrites=true&w=majority'
 
-client=MongoClient(mongoUrl)
+# mongoUrl='mongodb://root:example@localhost:27017/'
 
+client=MongoClient(mongoUrl)
 db=client['authorCafe']
 
 
@@ -44,11 +45,13 @@ def root():
     return res
 
 
-@app.get('/cummulative',status_code=200)
-def root():
+# @app.get('/cummulative',status_code=200)
+# def root():
 
-    dataList=list(db.cummulative.find())
+#     dataList=list(db.cummulative.find())
 
-    res=dataParser(dataList)
+#     res=dataParser(dataList)
     
-    return res
+#     return res
+
+
