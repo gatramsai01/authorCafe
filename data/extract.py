@@ -4,8 +4,7 @@ import json
 annual=pd.read_csv("./csv/annual.csv")
 annual=annual.set_index('year')
 
-cummulative=pd.read_csv('./csv/cummulative.csv')
-cummulative=cummulative.set_index('year')
+
 
 
 
@@ -27,9 +26,17 @@ class NpEncoder(json.JSONEncoder):
 def extract(df):
     data=[]
     cols=df.columns
+    row=set()
+
+    for col in cols:
+        x=df.query(f'{col}<10').index 
+        row.update(x)
+
+    df=df.drop(row)
+
+
     for col in cols:
         
-        df.loc[df[col]<10,col]=0
         myDict=dict(df[col])
         temp={
             "name":col,
@@ -40,12 +47,21 @@ def extract(df):
     return data
 
 
+
+
+
+  
+
+
+
+
+
+
+
 annualData=extract(annual)
+
+
 
 with open('./json/annual.json','w') as outFile:
         outFile.write(json.dumps(annualData,cls=NpEncoder))
 
-cummulativeData=extract(cummulative)
-
-with open('./json/cummulative.json','w') as outFile:
-        outFile.write(json.dumps(cummulativeData,cls=NpEncoder))
